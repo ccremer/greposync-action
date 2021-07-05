@@ -1,0 +1,110 @@
+= ccremer/greposync-action
+:major-version: v0
+
+image:https://img.shields.io/github/v/release/ccremer/greposync-action[Version,link=https://github.com/ccremer/greposync-action/releases]
+
+GitHub Action for https://github.com/ccremer/greposync[ccremer/greposync]
+
+Documentation::
+https://ccremer.github.io/greposync[ccremer.github.io/greposync]
+
+== Setup
+
+=== Configure the step
+
+Specify the action as part of your GitHub actions workflow:
+
+[source,yaml,subs=attributes]
+----
+- name: Run greposync
+  uses: ccremer/greposync-action@{major-version}
+  env:
+    GITHUB_TOKEN: ${{ secrets.GREPOSYNC_TOKEN }}
+  with:
+    args: update --help
+----
+
+[TIP]
+====
+`${{ secrets.GITHUB_TOKEN }}` only grants rights to the current repository, which makes no sense for greposync as it clones and manages other repositories.
+Use a PAT (Personal Access Token) instead.
+====
+
+=== Full example
+
+[source,yaml,subs=attributes]
+----
+name: Sync
+
+on:
+  workflow_dispatch:
+    inputs:
+      filter:
+        description: 'Filter sync for a specific repository (exact name or regex)'
+        required: false
+        default: ''
+  push:
+    branches:
+      - master
+      - main
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Configure Git
+        run: |
+          git config --global user.name "$GITHUB_ACTOR"
+          git config --global user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+            ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      - name: Run greposync
+        uses: ccremer/greposync-action@{major-version}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GREPOSYNC_TOKEN }}
+        with:
+          args: update --pr --filter=${{ github.event.inputs.filter }}
+----
+
+== Customization
+
+=== Configuration
+
+[source,yaml,subs=attributes]
+----
+- name: Run greposync
+  uses: ccremer/greposync-action@{major-version}
+  with:
+    version: latest
+    args: update --pr
+----
+
+.Parameters
+|===
+| Input | Description | Default
+
+| `version`
+| The release version greposync to install.
+  Must match the exact tag.
+  Use `latest` to install the latest stable release.
+| `latest`
+
+| `args`
+| A string of arguments to pass to greposync.
+  This value is required!
+|
+|===
+
+== Contribute
+
+See available `make` targets with
+
+[source,bash]
+----
+$ make help
+----
+
+When creating a PR, please fill in the PR template as best as you know.
