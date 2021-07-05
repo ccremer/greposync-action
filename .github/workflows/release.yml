@@ -39,4 +39,4 @@ jobs:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
           const script = require('./.github/move-tag.js')
-          script({github, context})
+          await script({github, context})
