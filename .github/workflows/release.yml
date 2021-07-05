@@ -6,7 +6,7 @@ on:
     - v*
 
 jobs:
-  goreleaser:
+  dist:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -38,5 +38,7 @@ jobs:
       with:
         github-token: ${{ secrets.GITHUB_TOKEN }}
         script: |
-          const script = require('./.github/move-tag.js')
+          const path = require('path')
+          const scriptPath = path.resolve('./.github/move-tag.js')
+          const script = require(scriptPath)
           script({github, context})
