@@ -1,0 +1,15 @@
+name: greposync
+description: Keep Git repositories in sync
+author: ccremer
+inputs:
+  version:
+    description: greposync version to use
+    required: true
+    default: latest
+  args:
+    description: arguments to pass to greposync
+    required: true
+outputs: {}
+runs:
+  using: bash
+  main: greposync.sh
