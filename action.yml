@@ -11,5 +11,8 @@ inputs:
     required: true
 outputs: {}
 runs:
-  using: bash
-  main: greposync.sh
+  using: composite
+  steps:
+    - shell: bash
+      run: |
+        "$GITHUB_ACTION_PATH/greposync.sh" "${{ inputs.version }}" "${{ inputs.args }}"
