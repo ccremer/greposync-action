@@ -15,4 +15,4 @@ runs:
   steps:
     - shell: bash
       run: |
-        "$GITHUB_ACTION_PATH/greposync.sh"
+        "$GITHUB_ACTION_PATH/greposync.sh" "${{ inputs.version }}" "${{ inputs.args }}"

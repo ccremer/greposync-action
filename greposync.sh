@@ -2,7 +2,7 @@
 
 set -xeo pipefail
 
-version=${INPUT_VERSION}
+version=${1}
 
 install_gsync() {
   if [[ ! -d "$RUNNER_TOOL_CACHE" ]]; then
@@ -32,7 +32,7 @@ install_gsync() {
 }
 
 run() {
-  gsync ${INPUT_ARGS}
+  gsync ${2}
 }
 
 install_gsync
