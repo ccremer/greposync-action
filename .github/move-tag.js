@@ -1,4 +1,4 @@
-module.exports = ({ github, context }) => {
+module.exports = async ({ github, context }) => {
   const tag = context.ref.substring(10, 12)
   console.log("tag: " + tag)
   try {
