@@ -3,6 +3,7 @@
 set -xeo pipefail
 
 version=${1}
+args=${2}
 
 install_gsync() {
   if [[ ! -d "$RUNNER_TOOL_CACHE" ]]; then
@@ -29,9 +30,10 @@ install_gsync() {
 }
 
 run() {
-  echo ${PWD}
-  echo ${2}
-  gsync ${2}
+  ls
+  touch gitreposync.yml # temporary fix
+  echo ${args}
+  gsync ${args}
 }
 
 install_gsync
