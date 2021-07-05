@@ -1,5 +1,5 @@
 module.exports = ({ github, context }) => {
-  const tag = context.ref.substring(11, 13)
+  const tag = context.ref.substring(10, 12)
   console.log("tag: " + tag)
   try {
     github.git.deleteRef({
