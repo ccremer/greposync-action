@@ -10,10 +10,7 @@ install_gsync() {
       exit 1
   fi
 
-  local arch
-  arch=$(uname -m)
-
-  local cache_dir="$RUNNER_TOOL_CACHE/gsync/$version/$arch"
+  local cache_dir="$RUNNER_TOOL_CACHE/gsync/$version/amd64"
   if [[ ! -d "$cache_dir" ]]; then
     local download_dir=$(mktemp -d)
     mkdir -p "$cache_dir" "$download_dir"
@@ -32,6 +29,8 @@ install_gsync() {
 }
 
 run() {
+  echo ${PWD}
+  echo ${2}
   gsync ${2}
 }
 
