@@ -13,7 +13,7 @@ help: ## Show this help
 
 .PHONY: run
 run: export RUNNER_TOOL_CACHE = $(shell pwd)
-run: version = v0.1.0-rc1
+run: version = v0.1.0
 run: args = --help
 run: ## Run locally
 	rm -rf gsync
