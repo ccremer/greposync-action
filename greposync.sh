@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eo pipefail
+set -eox pipefail
 
 version=${1}
 args=${2}
@@ -37,5 +37,4 @@ install_gsync() {
 }
 
 install_gsync
-touch gitreposync.yml
 gsync ${args}
