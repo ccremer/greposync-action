@@ -1,9 +1,16 @@
 #!/bin/bash
 
-set -eox pipefail
+set -eo pipefail
 
 version=${1}
 args=${2}
+
+download_base_url="https://github.com/ccremer/greposync/releases"
+if [[ $version == "latest" ]]; then
+  version_url="$download_base_url/latest/download"
+else
+  version_url="$download_base_url/download/$version"
+fi
 
 install_gsync() {
   if [[ ! -d "$RUNNER_TOOL_CACHE" ]]; then
@@ -19,8 +26,8 @@ install_gsync() {
 
     echo "⬇️ Downloading greposync..."
     pushd $download_dir
-    curl -sSLo gsync_linux_amd64 "https://github.com/ccremer/greposync/releases/download/$version/gsync_linux_amd64"
-    curl -sSLo checksums.txt "https://github.com/ccremer/greposync/releases/download/$version/checksums.txt"
+    curl -sSLo gsync_linux_amd64 "$version_url/gsync_linux_amd64"
+    curl -sSLo checksums.txt "$version_url/checksums.txt"
     echo "🔒 Verifying download..."
     grep "$(sha256sum gsync_linux_amd64 | cut -f 1 -d ' ')  gsync_linux_amd64" checksums.txt
     echo "🧹 Cleaning up downloads..."
